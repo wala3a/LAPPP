@@ -98,13 +98,16 @@ label{font-size:.8rem;color:var(--mut)}
 #stage.mrHeating::after{content:'🔥 تسخين';position:absolute;top:8px;right:8px;z-index:2;pointer-events:none;font-size:.75rem;font-weight:700;color:var(--or);background:rgba(249,115,22,.16);border:1px solid var(--or);border-radius:10px;padding:0 8px;animation:mrPulse 1s ease-in-out infinite}
 @keyframes mrPulse{50%{opacity:.55}}
 </style>
+
 </head>
 <body>
+
 
 <div id="top"><div class="in">
   <div class="row"><span>🧪 الدكتور <b class="nm">...</b></span><span id="pl">الوضع تحت السيطرة</span><span>⭐ <b id="sc">0</b></span></div>
   <div id="track"><div id="fill"></div></div>
 </div></div>
+
 
 <section class="tab on" id="t0">
  <div class="glass"><h2>📖 ملخص الشرح والأدلة الكاملة</h2>
@@ -135,6 +138,7 @@ label{font-size:.8rem;color:var(--mut)}
  <div class="glass"><h3>🃏 (اضغط للقلب)</h3><div class="fl" id="fl"></div></div>
 </section>
 
+
 <section class="tab" id="t1">
  <div class="glass"><h2>💍ورايا علي المعمل يا لوكسسسسس</h2>
   <div id="stage"><div id="cap" dir="ltr">اختر المتفاعل ثم الناتج الصحيح</div></div>
@@ -146,9 +150,12 @@ label{font-size:.8rem;color:var(--mut)}
 
 <section class="tab" id="t2"><div class="glass" id="qz"></div></section>
 
+
 <section class="tab" id="t3"><div class="glass"><h2>🎴 كروت الكيمياء الاستراتيجية</h2><div class="cards" id="cd"></div></div></section>
 
+
 <section class="tab" id="t4"><div class="glass" id="pv"></div></section>
+
 
 <section class="tab" id="t5">
  <div class="glass"><h2>🧮 المعايرة (Titration)</h2><p class="fb">(Ma·Va)/na = (Mb·Vb)/nb — اترك خانة واحدة فارغة للحساب</p>
@@ -177,7 +184,9 @@ label{font-size:.8rem;color:var(--mut)}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+
 const TEACHER_IMG = 'zizo-fail.jpg'; 
+
 
 const SOUNDS = { click:'', fail:'', success:'' };
 const clickAudio = new Audio(SOUNDS.click||undefined), failAudio = new Audio(SOUNDS.fail||undefined), successAudio = new Audio(SOUNDS.success||undefined);
@@ -340,10 +349,8 @@ function legend(p,stage){const g=$('#leg');if(!p){g.hidden=true;return}g.hidden=
 let mRound=[],selR=null,selP=null,matched=0;
 function mRender(){$('#mR').innerHTML=mRound.map((p,i)=>`<button data-i="${i}" class="${p.done?'done':''}" ${p.done?'disabled':''}>${p.r}</button>`).join('');
  $('#mP').innerHTML=mRound.map(p=>p).sort((a,b)=>a.o-b.o).map(p=>`<button data-i="${mRound.indexOf(p)}" class="${p.done?'done':''}" ${p.done?'disabled':''}>${p.p}</button>`).join('');
- $$('#mR button').forEach(b=>b.onclick=()=>{selR=+b.dataset.i;tubePre(mRound[selR].v);legend(mRound[selR],0);$$
-('#mR button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');snd('click');chk()});
- $$('#mP button').forEach(b=>b.onclick=()=>{selP=+b.dataset.i;$$
-('#mP button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');snd('click');chk()})}
+ $$('#mR button').forEach(b=>b.onclick=()=>{selR=+b.dataset.i;tubePre(mRound[selR].v);legend(mRound[selR],0);$$('#mR button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');snd('click');chk()});
+ $$('#mP button').forEach(b=>b.onclick=()=>{selP=+b.dataset.i;$$('#mP button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');snd('click');chk()})}
 function chk(){if(selR===null||selP===null)return;const ok=selR===selP,p=mRound[selR];
  if(ok){p.done=true;matched++;tubeReact(p.v);legend(p,1);$('#cap').textContent='✅ '+p.r+' ← '+p.p+' ('+p.en+')';result(true);say(p.fx)}else{$('#cap').textContent='❌ تفاعل غير صحيح!';tubeFail();result(false)}
  selR=selP=null;mRender();if(matched===mRound.length)say('كل التفاعلات صحيحة يا دكتور '+NAME+'! 💍🎉')}
@@ -399,45 +406,46 @@ $('#qpGo').onclick=()=>{const ms=v('#q_ms'),mp=v('#q_mp'),Mp=v('#q_Mp'),Mc=v('#q
 init3D();mNew();qRender();pvIntro();setPanic(20);
 </script>
 <script id="mr-additions-js">
+
 const MR_IMGS = {
-  shock: 'sudeen.jpg',
-  suspicious: 'zizo-fail.jpg',
-  celebrate: 'sucsess.jpg'
+  shock:      'sudeen.jpg', 
+  suspicious: 'zizo-fail.jpg', 
+  celebrate:  'sucsess.jpg'  
 };
 const MR_IMG_FALLBACK = { shock:'😱', suspicious:'🤨', celebrate:'🥳' };
 
 const MR_SFX = {
   panicAlert: 'faillll3.mp3',
-  mazoun: 'lap.mp3',
-  rottenEgg: 'so2.mp3'
+  mazoun:     'lap.mp3',
+  rottenEgg:  'so2.mp3'  
 };
 
 const MR_TXT = {
-  shock: 'مكتوب عليا أموت بحسرتي بسببكم!',
-  suspicious: 'مركز ولا بتخمن يا {n}؟',
-  heat: 'دية بتحتاج حراره خلي بالك يا لوكس'
+  shock:      'مكتوب عليا أموت بحسرتي بسببكم!', 
+  suspicious: 'مركز ولا بتخمن يا {n}؟',          
+  heat:       'دية بتحتاج حراره خلي بالك يا لوكس' 
 };
 
 const MR_HEAT = {
-  'HCO₃⁻ + dil. HCl': true,
-  'Br⁻ + conc. H₂SO₄': true,
-  'I⁻ + conc. H₂SO₄': true
+  'HCO₃⁻ + dil. HCl':    true, 
+  'Br⁻ + conc. H₂SO₄':   true, 
+  'I⁻ + conc. H₂SO₄':    true  
 };
 const MR_HEAT_AFTER_MATCH_MS = 3000;
 
 (function(){
 'use strict';
 
-const audioCache = {};
-let ctx = null;
+const audioCache = {}; 
+let ctx = null;          
 function getCtx(){try{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}catch(e){return null}}
 function tone(f,t0,d,type,vol,f2){const ac=getCtx();if(!ac)return;
  const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+t0;o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.linearRampToValueAtTime(f2,t+d);
  g.gain.setValueAtTime(vol||.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+.02)}
 const FALLBACK = {
-  panicAlert(){for(let i=0;i<4;i++){tone(880,i*.28,.14,'square',.06);tone(620,i*.28+.14,.14,'square',.06)}},
-  mazoun(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.12,.22,'triangle',.08))},
-  rottenEgg(){tone(180,0,.5,'sawtooth',.07,90);tone(140,.15,.5,'sawtooth',.06,70);tone(110,.5,.4,'square',.05,60)}
+  panicAlert(){for(let i=0;i<4;i++){tone(880,i*.28,.14,'square',.06);tone(620,i*.28+.14,.14,'square',.06)}}, 
+  mazoun(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.12,.22,'triangle',.08))},                          
+  rottenEgg(){tone(180,0,.5,'sawtooth',.07,90);tone(140,.15,.5,'sawtooth',.06,70);tone(110,.5,.4,'square',.05,60)} 
 };
 function play(key){try{const src=MR_SFX[key];
   if(src){let a=audioCache[key];if(!a){a=new Audio(src);audioCache[key]=a}a.currentTime=0;const p=a.play();if(p&&p.catch)p.catch(()=>FALLBACK[key]())}
@@ -445,9 +453,9 @@ function play(key){try{const src=MR_SFX[key];
 
 (function(){
   const box=document.querySelector('#faint .glass'); if(!box)return;
-  if(MR_IMGS.shock){
+  if(MR_IMGS.shock){ 
     const im=new Image(); im.className='mrShockImg'; im.alt='المستر مذهول';
-    im.onerror=()=>im.remove();
+    im.onerror=()=>im.remove(); 
     im.src=MR_IMGS.shock; box.insertBefore(im,box.firstChild);
   }
   const p=document.createElement('p'); p.className='mrShockTxt'; p.textContent=MR_TXT.shock;
@@ -456,12 +464,12 @@ function play(key){try{const src=MR_SFX[key];
 
 const pop=document.createElement('div'); pop.id='mrPop'; pop.setAttribute('aria-live','polite');
 pop.innerHTML='<div class="mrFace"></div><div class="mrTxt"></div><div class="mrConf"></div>';
-document.body.appendChild(pop);
+document.body.appendChild(pop); 
 let popT=0;
 function showPop(key,text,ms){
   clearTimeout(popT);
   const face=pop.querySelector('.mrFace'),txt=pop.querySelector('.mrTxt'),conf=pop.querySelector('.mrConf');
-  face.textContent='';
+  face.textContent=''; 
   if(MR_IMGS[key]){const im=new Image();im.alt='';im.onerror=()=>{face.textContent=MR_IMG_FALLBACK[key]};im.src=MR_IMGS[key];face.appendChild(im)}
   else face.textContent=MR_IMG_FALLBACK[key];
   txt.textContent=text||'';
@@ -470,21 +478,20 @@ function showPop(key,text,ms){
   pop.className='on '+key;
   popT=setTimeout(()=>pop.classList.remove('on'),ms||3500);
 }
-
 const oldSetPanic=window.setPanic;
 window.setPanic=function(v){
-  const prev=panic;
-  const r=oldSetPanic.apply(this,arguments);
+  const prev=panic;                                   
+  const r=oldSetPanic.apply(this,arguments);         
   if(prev<=80 && panic>80) setTimeout(()=>play('panicAlert'),350);
   return r;
 };
 
 const oldGo=window.go;
 window.go=function(i){
-  const r=oldGo.apply(this,arguments);
-  if(i===1) play('mazoun');
-  if(i!==1) stopHeat();
-  if(i===2) showPop('suspicious',MR_TXT.suspicious.replace(/\{n\}/g,NAME),3800);
+  const r=oldGo.apply(this,arguments);             
+  if(i===1) play('mazoun');                          
+  if(i!==1) stopHeat();                              
+  if(i===2) showPop('suspicious',MR_TXT.suspicious.replace(/\{n\}/g,NAME),3800); 
   return r;
 };
 
@@ -493,12 +500,13 @@ const oldChk=window.chk;
 window.chk=function(){
   const r=oldChk.apply(this,arguments);
   try{ if(mRound.length && matched===mRound.length && celebratedRound!==mRound){
-    celebratedRound=mRound;
-    setTimeout(()=>showPop('celebrate','',5000),500);
+    celebratedRound=mRound;                          
+    setTimeout(()=>showPop('celebrate','',5000),500); 
   }}catch(e){}
   return r;
 };
 
+const needsHeat=p=>p.heat!==undefined?!!p.heat:!!MR_HEAT[p.r];
 PAIRS.forEach(p=>{if(p.heat===undefined)p.heat=!!MR_HEAT[p.r]});
 mRound.forEach(p=>{if(p.heat===undefined)p.heat=!!MR_HEAT[p.r]});
 
@@ -514,16 +522,16 @@ function ensureFlame(){
 }
 function heatFrame(){
   heatRAF=requestAnimationFrame(heatFrame);
-  const now=performance.now(); heatLvl+=((heatOn?1:0)-heatLvl)*.08;
-  if(typeof tube!=='undefined'&&tube){tube.position.x=Math.sin(now/38)*.03*heatLvl;
-    tube.position.y=.35*heatLvl;}
-  if(heatOn&&typeof liq!=='undefined'&&liq&&liq.material.emissive)
+  const now=performance.now(); heatLvl+=((heatOn?1:0)-heatLvl)*.08;                
+  if(typeof tube!=='undefined'&&tube){tube.position.x=Math.sin(now/38)*.03*heatLvl;   
+    tube.position.y=.35*heatLvl;}                                                     
+  if(heatOn&&typeof liq!=='undefined'&&liq&&liq.material.emissive)                      
     liq.material.emissive.setRGB(.28*heatLvl*(.8+.2*Math.sin(now/90)),.08*heatLvl,0);
   if(flame){flame.visible=heatLvl>.02;const w=1+.08*Math.sin(now/41),fl=1+.22*Math.sin(now/55)+.1*Math.sin(now/23);
     flame.scale.set(w,Math.max(.001,fl*heatLvl),w);
     flame.children[0].material.opacity=.8*heatLvl;flame.children[1].material.opacity=.9*heatLvl;
     heatLight.intensity=1.6*heatLvl*(.8+.2*Math.sin(now/70));}
-  if(!heatOn&&heatLvl<.004){
+  if(!heatOn&&heatLvl<.004){ 
     heatLvl=0;cancelAnimationFrame(heatRAF);heatRAF=0;
     if(typeof tube!=='undefined'&&tube){tube.position.x=0;tube.position.y=0}
     if(flame){flame.visible=false;heatLight.intensity=0}
@@ -531,30 +539,30 @@ function heatFrame(){
 }
 function startHeat(){
   clearTimeout(heatStopT); heatOn=true; ensureFlame();
-  const st=document.getElementById('stage'); if(st)st.classList.add('mrHeating');
+  const st=document.getElementById('stage'); if(st)st.classList.add('mrHeating');   
   if(!heatRAF)heatFrame();
 }
 function stopHeat(){
   clearTimeout(heatStopT); if(!heatOn&&!heatRAF)return; heatOn=false;
   const st=document.getElementById('stage'); if(st)st.classList.remove('mrHeating');
-  try{if(typeof liq!=='undefined'&&liq&&liq.material.emissive)liq.material.emissive.setHex(0)}catch(e){}
+  try{if(typeof liq!=='undefined'&&liq&&liq.material.emissive)liq.material.emissive.setHex(0)}catch(e){} 
 }
 
 document.getElementById('mR').addEventListener('click',function(e){
   const b=e.target.closest&&e.target.closest('button'); if(!b||b.disabled)return;
   const p=mRound[+b.dataset.i]; if(!p)return;
-  if(p.r==='S²⁻ + dil. HCl') play('rottenEgg');
-  if(needsHeat(p)){startHeat();say(MR_TXT.heat)}
-  else stopHeat();
+  if(p.r==='S²⁻ + dil. HCl') play('rottenEgg');      
+  if(needsHeat(p)){startHeat();say(MR_TXT.heat)}      
+  else stopHeat();                                    
 },true);
 
 const oldNeutral=window.tubeNeutral;
-window.tubeNeutral=function(){stopHeat();return oldNeutral.apply(this,arguments)};
+window.tubeNeutral=function(){stopHeat();return oldNeutral.apply(this,arguments)};          
 const oldFail=window.tubeFail;
-window.tubeFail=function(){stopHeat();return oldFail.apply(this,arguments)};
+window.tubeFail=function(){stopHeat();return oldFail.apply(this,arguments)};                 
 const oldReact=window.tubeReact;
-window.tubeReact=function(){const r=oldReact.apply(this,arguments);
-  clearTimeout(heatStopT); if(heatOn)heatStopT=setTimeout(stopHeat,MR_HEAT_AFTER_MATCH_MS);
+window.tubeReact=function(){const r=oldReact.apply(this,arguments);                        
+  clearTimeout(heatStopT); if(heatOn)heatStopT=setTimeout(stopHeat,MR_HEAT_AFTER_MATCH_MS); 
   return r};
 })();
 </script>
