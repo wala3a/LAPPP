@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3Zz Chemistry | كيمياء تانية ثانوي (النسخة الشخصية المطورة)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--line:#334155;--tx:#e2e8f0;--mut:#94a3b8;--or:#f97316;--or2:#fb923c;--ok:#22c55e;--bad:#ef4444;--glow:rgba(249,115,22,0.3);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body.cyber-mode{--bg:#05050f;--card:#0d0e26;--line:#1e1b4b;--tx:#f1f5f9;--or:#06b6d4;--or2:#22d3ee;--glow:rgba(6,182,212,0.5)}
+
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:'Cairo',system-ui,sans-serif;line-height:1.7;transition:background 0.3s ease,color 0.3s ease}
+.w{max-width:760px;margin:auto;padding:14px;padding-bottom:90px}
+
+/* شاشة إدخال الاسم البداية */
+#welcomeScreen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:var(--bg);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
+.welcome-card{background:var(--card);border:2px solid var(--or);border-radius:16px;padding:30px;text-align:center;max-width:400px;width:100%;box-shadow:0 0 30px var(--glow)}
+
+.header-box{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px;box-shadow:0 0 15px var(--glow)}
+.badge-title{background:rgba(249,115,22,0.15);color:var(--or2);padding:4px 10px;border-radius:20px;font-size:0.85rem;font-weight:800;border:1px solid var(--or)}
+
+h1{font-size:1.6rem;font-weight:800;margin:0}h1 b{color:var(--or)}
+.sub{color:var(--mut);margin:0 0 12px;font-size:.92rem}
+nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0 10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{flex:none;background:var(--card);color:var(--mut);border:1px solid var(--line);border-radius:10px;padding:8px 13px;font:600 .9rem 'Cairo',sans-serif;cursor:pointer}
+nav button.on{background:var(--or);color:#1a0f05;border-color:var(--or);box-shadow:0 0 10px var(--glow)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--or2);outline-offset:2px}
+section{display:none}section.on{display:block}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:0 14px}
+summary{cursor:pointer;font-weight:700;padding:11px 0;color:var(--or2)}
+details[open]{border-color:var(--or)}
+.t{width:100%;border-collapse:collapse;font-size:.86rem;margin:0 0 12px;direction:ltr;text-align:left}
+.t th,.t td{border-bottom:1px solid var(--line);padding:6px 5px;vertical-align:top}
+.t th{color:var(--mut);font-weight:600}
+.sc{overflow-x:auto}
+.tip{border-right:3px solid var(--or);padding:4px 10px;background:#f973161a;border-radius:6px;font-size:.88rem;margin:6px 0 12px}
+.en{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.btn{background:var(--or);color:#1a0f05;border:0;border-radius:10px;padding:9px 16px;font:700 .95rem 'Cairo',sans-serif;cursor:pointer;transition:transform 0.1s}
+.btn:active{transform:scale(0.96)}
+.btn.g{background:transparent;color:var(--or2);border:1px solid var(--or)}
+.opt{display:block;width:100%;text-align:right;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:6px 0;font:600 .93rem 'Cairo',sans-serif;cursor:pointer}
+.opt.ok{background:#22c55e26;border-color:var(--ok)}.opt.no{background:#ef444426;border-color:var(--bad)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 6px;font:600 .85rem 'Cairo',sans-serif;cursor:grab;min-height:54px;transition:.2s;user-select:none}
+.m:active{cursor:grabbing}
+.m.s{border-color:var(--or);background:#f9731626;box-shadow:0 0 8px var(--glow)}
+.m.d{border-color:var(--ok);background:#22c55e26;opacity:.55;pointer-events:none}
+.m.x{border-color:var(--bad);animation:shake .4s}
+
+/* مؤشر توتر الأعصاب (Panic Bar) */
+.panic-container{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.panic-bar-bg{flex-grow:1;height:10px;background:var(--bg);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.panic-bar-fill{height:100%;width:20%;background:var(--ok);transition:all 0.4s ease}
+
+/* أستاذ المعمل الثابت في الزاوية (Mascot Box) */
+.mascot-box{position:fixed;bottom:15px;right:15px;display:flex;align-items:flex-end;gap:8px;z-index:999;max-width:280px;pointer-events:none}
+.mascot-avatar{width:55px;height:55px;border-radius:50%;border:2px solid var(--or);background:var(--card);overflow:hidden;box-shadow:0 0 15px var(--glow);flex-shrink:0;pointer-events:auto}
+.mascot-avatar img{width:100%;height:100%;object-fit:cover}
+.mascot-bubble{background:var(--card);border:1px solid var(--or);border-radius:12px;padding:8px 12px;font-size:0.8rem;font-weight:700;color:var(--tx);box-shadow:0 4px 15px rgba(0,0,0,0.3);position:relative;animation:fadeIn 0.3s}
+
+/* نظام كروت المعركة (Chem-Cards TCG) */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.chem-card-item{background:linear-gradient(135deg,var(--card), #0f172a);border:2px solid var(--or);border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.2s}
+.chem-card-item:hover{transform:translateY(-4px)}
+.card-badge{background:rgba(249,115,22,0.2);color:var(--or2);padding:2px 8px;border-radius:10px;font-size:0.75rem;font-weight:800}
+
+/* تأثيرات الشاشة والفوران */
+body.screen-shake{animation:bigShake 0.4s ease-in-out}
+body.flash-red{background:#450a0a !important}
+body.faint-mode{filter:grayscale(80%) blur(1px);pointer-events:none}
+
+@keyframes bigShake{0%,100%{transform:translate(0,0)}20%{transform:translate(-8px,5px)}40%{transform:translate(8px,-5px)}60%{transform:translate(-5px,-5px)}80%{transform:translate(5px,5px)}}
+@keyframes tubeShake{0%,100%{transform:rotate(0deg)}20%{transform:rotate(-10deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(5deg)}}
+@keyframes bubbleRise{0%{transform:translateY(0) scale(0.6);opacity:1}100%{transform:translateY(-60px) scale(1.4);opacity:0}}
+@keyframes pourDrop{0%{top:-20px;opacity:1}100%{top:35px;opacity:0}}
+@keyframes foamRise{0%{height:40%}50%{height:85%}100%{height:40%}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.lab-layout{display:flex;align-items:center;justify-content:center;gap:20px;margin:12px 0}
+.lab-container{display:flex;flex-direction:column;align-items:center;position:relative}
+.beaker-drop-zone{width:70px;height:70px;border:3px dashed var(--or);border-radius:12px;background:rgba(249,115,22,0.08);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:all 0.3s}
+.beaker-drop-zone.drag-over{background:rgba(34,197,94,0.2);border-color:var(--ok);transform:scale(1.05)}
+
+.test-tube{width:36px;height:90px;border:3px solid #94a3b8;border-top:none;border-radius:0 0 18px 18px;position:relative;background:rgba(255,255,255,0.03);overflow:hidden;margin:0 auto}
+.test-tube::before{content:'';position:absolute;top:-6px;left:-6px;right:-6px;height:6px;background:#64748b;border-radius:3px}
+.tube-liquid{position:absolute;bottom:0;left:0;right:0;height:40%;background:rgba(56,189,248,0.4);transition:all .5s ease}
+.tube-ppt{position:absolute;bottom:0;left:0;right:0;height:0%;background:transparent;transition:all .5s ease;border-radius:0 0 15px 15px}
+.tube-drop{position:absolute;left:50%;top:-20px;width:6px;height:12px;background:var(--or2);border-radius:50%;transform:translateX(-50%);opacity:0}
+.tube-active .tube-drop{animation:pourDrop 0.4s ease-in}
+.tube-active{animation:tubeShake .5s ease}
+.tube-foam{animation:foamRise 0.6s ease-in-out}
+.vapor-bubble{position:absolute;bottom:35px;left:50%;width:8px;height:8px;background:rgba(255,255,255,0.8);border-radius:50%;transform:translateX(-50%);opacity:0}
+.tube-active .vapor-bubble{animation:bubbleRise 0.7s infinite linear}
+
+.indicator-strip{width:14px;height:55px;background:#e2e8f0;border-radius:4px;border:2px solid #64748b;transition:background 0.5s ease;box-shadow:0 0 10px rgba(255,255,255,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#0f172a}
+
+#confettiCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999}
+
+label{display:block;font-size:.85rem;color:var(--mut)}
+input{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px;font:600 1rem 'Cairo',sans-serif;direction:ltr;text-align:left}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.res{background:#f973161f;border:1px dashed var(--or);border-radius:10px;padding:10px;margin-top:10px;direction:ltr;text-align:left;white-space:pre-line;font-weight:600;min-height:44px}
+.bar{display:flex;justify-content:space-between;color:var(--mut);font-size:.9rem}
+.bar b{color:var(--or2)}
+.meme-card{text-align:center;margin-top:10px}
+.meme-card img{max-width:100%;border-radius:10px;max-height:160px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<!-- شاشة طلب الاسم أول ما يفتح الموقع -->
+<div id="welcomeScreen">
+  <div class="welcome-card">
+    <h2 style="color:var(--or2);margin-top:0">أهلاً بيك يا لوكسسسس! ⚗️</h2>
+    <p style="font-size:0.9rem;color:var(--mut)">منور معمل 3Zz Chemistry. عرفنا باسمك عشان نبدأ المعركة:</p>
+    <input type="text" id="userNameInput" placeholder="اكتب اسمك هنا (مثلاً: عز)..." style="text-align:center;direction:rtl;margin:10px 0">
+    <button class="btn" style="width:100%;margin-top:10px" onclick="saveUserName()">دخول المعمل 🚀</button>
+  </div>
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+
+<!-- 🤖 أستاذ المعمل الثابت (يمكنك تغيير رابط الصورة هنا بصورة المستر بتاعك) -->
+<div class="mascot-box">
+  <div class="mascot-bubble" id="mascotMsg">يا دكتور، الكيمياء بتنشف في الأنبوبة، قوم حل سؤالين! 😂</div>
+  <div class="mascot-avatar">
+    <!-- 🖼️ مكان صورة المستر: استبدل الرابط أدناه برابط صورتك المباشر -->
+    <img id="mascotImg" src="zizo-fail.jpg" alt="المستر">
+  </div>
+</div>
+
+<div class="w">
+
+<div class="header-box">
+  <div>
+    <h1>3Zz <b>Chemistry</b> ⚗️</h1>
+    <span class="sub" style="margin:0">Analaysis</span>
+  </div>
+  <div style="text-align:left">
+    <div class="badge-title" id="userBadge">مساعد معمل غلبان 🧪</div>
+    <button class="btn g" style="padding:2px 8px;font-size:0.75rem;margin-top:4px" onclick="toggleCyberMode()">ثيم النيون 🌙</button>
+  </div>
+</div>
+
+<!-- شريط مؤشر حرق الأعصاب (Panic Bar) -->
+<div class="panic-container">
+  <span style="font-size:0.85rem;font-weight:700" id="panicTitle">🧠 مؤشر أعصاب الدكتور:</span>
+  <div class="panic-bar-bg"><div class="panic-bar-fill" id="panicFill"></div></div>
+  <span id="panicLabel" style="font-size:0.8rem;font-weight:700;color:var(--ok)">الوضع تحت السيطرة</span>
+</div>
+
+<nav id="nav"></nav>
+
+<section id="s0" class="on">
+<div class="tip" id="welcomeTip">القاعدة الذهبية يا وحش: الأنيونات بتتحدد بالـ <span class="en">Gas / Fumes / Ppt</span> والكاتيونات بتتحدد بالـ <span class="en">Group Reagent</span> واللون بتاعه. ركز عشان مفيش صفر تاني! 🎯</div>
+
+<div class="card" style="border-color:var(--or2)">
+<b>🎨 كروت الألوان السريعة والاستثناءات (Lughat Flashcards):</b>
+<p class="sub" style="margin-bottom:6px">خلاصة الأبخرة والرواسب اللي بتلخبط:</p>
+<ul style="margin:0;padding-inline-start:18px;font-size:.88rem">
+<li><b>أبخرة اليود ($I_2$):</b> بنفسجية <span class="en">(Violet)</span>، تزرق ورقة النشا.</li>
+<li><b>أبخرة البروم ($Br_2$):</b> برتقالية حمراء <span class="en">(Orange-red)</span>، تصفر ورقة النشا.</li>
+<li><b>أبخرة النيتروجين ($NO_2$):</b> بني محمر <span class="en">(Reddish-brown)</span> عند فوهة الأنبوبة.</li>
+<li><b>الاستثناءات:</b> راسب $AgI$ أصفر ولا يدوب في النشادر، $AgCl$ أبيض ويدوب، $AgBr$ أصفر باهت ويدوب ببطء.</li>
+</ul>
+</div>
+
+<details open><summary>🧪 Anions – Group 1: Dil. HCl</summary>
+<div class="sc"><table class="t"><tr><th>Anion</th><th>Observation</th><th>Confirm</th></tr>
+<tr><td>CO₃²⁻</td><td>CO₂ gas (colourless)</td><td>Lime water turns milky (CaCO₃↓). Cold MgSO₄ → white ppt</td></tr>
+<tr><td>HCO₃⁻</td><td>CO₂ gas</td><td>Cold MgSO₄ → no ppt (ppt on heating)</td></tr>
+<tr><td>SO₃²⁻</td><td>SO₂ gas, suffocating odour</td><td>Acidified K₂Cr₂O₇ paper turns green</td></tr>
+<tr><td>S²⁻</td><td>H₂S gas, rotten-egg odour</td><td>Lead acetate paper turns black (PbS)</td></tr>
+<tr><td>S₂O₃²⁻</td><td>SO₂ gas + Yellow sulphur ppt</td><td>Suffocating odour + turbidity</td></tr>
+<tr><td>NO₂⁻</td><td>Brown fumes (NO₂)</td><td>Reddish-brown gas in the tube</td></tr></table></div></details>
+
+<details><summary>🔥 Anions – Group 2: Conc. H₂SO₄ & BaCl₂</summary>
+<div class="sc"><table class="t"><tr><th>Anion</th><th>Observation</th><th>Confirm</th></tr>
+<tr><td>Cl⁻</td><td>Colourless pungent HCl gas</td><td>NH₃ rod → white fumes. AgNO₃ → white ppt</td></tr>
+<tr><td>Br⁻</td><td>Reddish-brown vapour (Br₂)</td><td>AgNO₃ → pale yellow ppt</td></tr>
+<tr><td>I⁻</td><td>Violet vapour (I₂)</td><td>AgNO₃ → yellow ppt, insoluble</td></tr>
+<tr><td>NO₃⁻</td><td>Brown fumes with Cu</td><td>Brown ring test (FeSO₄ + conc. H₂SO₄)</td></tr>
+<tr><td>SO₄²⁻</td><td>White ppt with BaCl₂</td><td>Insoluble in dil. HCl</td></tr>
+<tr><td>PO₄³⁻</td><td>White ppt with BaCl₂</td><td>Soluble in dil. HCl</td></tr></table></div></details>
+
+<details><summary>🌈 Cations – Analytical Groups</summary>
+<div class="sc"><table class="t"><tr><th>Group</th><th>Reagent</th><th>Cation → Colour</th></tr>
+<tr><td>1</td><td>Dil. HCl</td><td>Ag⁺ → white AgCl; Pb²⁺ → white PbCl₂</td></tr>
+<tr><td>2</td><td>H₂S + dil. HCl</td><td>Cu²⁺ → black CuS; Cd²⁺ → yellow CdS</td></tr>
+<tr><td>3</td><td>NH₄OH + NH₄Cl</td><td>Fe³⁺ → reddish-brown Fe(OH)₃; Al³⁺ → white Al(OH)₃</td></tr>
+<tr><td>5</td><td>(NH₄)₂CO₃</td><td>Ca²⁺ → white carbonate</td></tr></table></div></details>
+</section>
+
+<section id="s1"><div id="g1"></div></section>
+<section id="s2"><div id="g2"></div></section>
+<section id="s3"><div id="g3"></div></section>
+
+<!-- Tab 4: معركة الكروت (Chem-Cards TCG) -->
+<section id="s4">
+<div class="card">
+  <b>🎴 كروت الكيمياء الاستراتيجية (Chem-Cards TCG)</b>
+  <p class="sub">دي مش مجرد كروت، دي طريقة تعلّم ذكية بتلخص لك خواص كل عنصر وقوته عشان تفتكره في الامتحان بسهولة! استدعِ الكارت وجرب:</p>
+  <div class="card-grid" id="cardBattleGrid"></div>
+  <div class="res" id="cardRes" style="margin-top:12px">اضغط على أي كارت لفهم قدرته ومهارته الكيميائية...</div>
+</div>
+</section>
+
+<!-- Tab 5: تحدي المعمل الثنائي (PvP Mode) -->
+<section id="s5">
+<div class="card">
+  <b>👥 تحدي المعمل: دورك ضد صاحبك (PvP Dual Score)</b>
+  <p class="sub">النظام هنا بيبدأ بدورك أنت الأول (دقيقة واحدة)، وبعدين ييجي دور صاحبك، وفي الآخر نشوف مين بطل المعمل!</p>
+  <div id="pvpArea">
+    <button class="btn" onclick="startPvPPlayer1()">ابدأ دورك يا بطل ⏱️</button>
+  </div>
+</div>
+</section>
+
+<!-- Tab 6: الحاسبات -->
+<section id="s6">
+<div class="card"><b>⚖️ المعايرة – Titration</b>
+<p class="sub">سيب خانة واحدة فاضية وأنا أحسبها يا هندسة. القانون: <span class="en">(Ma·Va)/(Mb·Vb) = na/nb</span></p>
+<div class="f"><div><label>Ma</label><input id="Ma" type="number" step="any"></div><div><label>Va</label><input id="Va" type="number" step="any"></div><div><label>na</label><input id="na" type="number" step="any"></div>
+<div><label>Mb</label><input id="Mb" type="number" step="any"></div><div><label>Vb</label><input id="Vb" type="number" step="any"></div><div><label>nb</label><input id="nb" type="number" step="any"></div></div>
+<button class="btn" onclick="tit()">احسب</button> <button class="btn g" onclick="cp('r1')">📋 انسخ</button><div class="res" id="r1"></div></div>
+
+<div class="card"><b>💧 ماء التبلر – Water of Crystallization (X)</b>
+<div class="f"><div><label>Mass hydrated (g)</label><input id="mh" type="number" step="any"></div><div><label>Mass anhydrous (g)</label><input id="ma" type="number" step="any"></div><div><label>Molar mass (g/mol)</label><input id="MM" type="number" step="any"></div></div>
+<button class="btn" onclick="wc()">احسب X</button> <button class="btn g" onclick="cp('r2')">📋 انسخ</button><div class="res" id="r2"></div></div>
+
+<div class="card"><b>🧱 نسبة النقاوة – Precipitation Purity %</b>
+<div class="f"><div><label>Mass sample (g)</label><input id="ms" type="number" step="any"></div><div><label>Mass ppt (g)</label><input id="mp" type="number" step="any"></div><div><label>M of ppt</label><input id="Mp" type="number" step="any"></div><div><label>M of compound</label><input id="Mc" type="number" step="any"></div><div><label>Ratio</label><input id="rt" type="number" step="any" value="1"></div></div>
+<button class="btn" onclick="pur()">احسب النقاوة</button> <button class="btn g" onclick="cp('r3')">📋 انسخ</button><div class="res" id="r3"></div></div>
+</section>
+</div>
+
+<script>
+let userName = "الدكتور";
+
+function saveUserName(){
+  const val = document.getElementById('userNameInput').value.trim();
+  if(val !== "") userName = val;
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('panicTitle').textContent = `🧠 مؤشر أعصاب ${userName}:`;
+  setMascotText(`منور يا دكتور ${userName}! استعد نقفل الباب التاني معاك! 🧪`);
+  playSound(clickAudio);
+}
+
+// 🔊 [صوت النقرة هنا] ضع ملف الصوت المخصص للنقرات هنا إذا أردت
+const clickAudio = new Audio('https://www.myinstants.com/media/sounds/click.mp3');
+// 🔊 [صوت الخطأ/الانفجار هنا] ضع صوت الخطأ المخصص هنا
+const failAudio = new Audio('https://www.myinstants.com/media/sounds/erro.mp3');
+// 🔊 [صوت الفوز/النجاح هنا] ضع صوت الفوز والتتويج هنا
+const successAudio = new Audio('https://www.myinstants.com/media/sounds/tada.mp3');
+
+function playSound(audioObj) {
+  try { if(audioObj) { audioObj.currentTime = 0; audioObj.play(); } } catch(e){}
+}
+
+function triggerVibration(pattern) {
+  try { if(navigator.vibrate) navigator.vibrate(pattern); } catch(e){}
+}
+
+function toggleCyberMode(){
+  document.body.classList.toggle('cyber-mode');
+  playSound(clickAudio);
+  setMascotText(`تنويه من المستر يا ${userName}: ثيم السايبربانك مش هينجحك لوحده، ركز! 💻`);
+}
+
+let userScore = 0;
+let panicLevel = 20; // 0 to 100
+
+function updatePanicBar(change){
+  panicLevel = Math.max(0, Math.min(100, panicLevel + change));
+  const fill = $('panicFill');
+  const label = $('panicLabel');
+  fill.style.width = panicLevel + '%';
+  
+  if(panicLevel < 40){
+    fill.style.background = 'var(--ok)';
+    label.style.color = 'var(--ok)';
+    label.textContent = 'الوضع تحت السيطرة يا دكتور 🟢';
+  } else if(panicLevel < 80){
+    fill.style.background = 'var(--or)';
+    label.style.color = 'var(--or)';
+    label.textContent = 'تحذير! المخ بيسخن ⚠️';
+    setMascotText(`المستر بيقول: اهدا يا ${userName}، خد نفسك واشرب شاي وتابع! ☕`);
+  } else {
+    fill.style.background = 'var(--bad)';
+    label.style.color = 'var(--bad)';
+    label.textContent = 'انذار خطر! المخ هنج 🚨';
+    setMascotText(`المستر: ${userName} جاب اخره وهيهنج! حد يلحق المعمل! 💀`);
+    if(panicLevel >= 100){
+      document.body.classList.add('faint-mode');
+      setTimeout(()=>{ document.body.classList.remove('faint-mode'); panicLevel=50; updatePanicBar(0); }, 3000);
+    }
+  }
+}
+
+function setMascotText(txt){
+  const m = $('mascotMsg');
+  if(m) m.textContent = txt;
+}
+
+function addScore(pts){
+  userScore += pts;
+  updatePanicBar(-10);
+  const badge = $('userBadge');
+  if(userScore >= 120){
+    badge.textContent = `${userName} كبير المأذونين وقاهر الكيمياء 👑`;
+    setMascotText(`المستر: ممتاز يا ${userName}! أنت كده ضمان قفل المادة بجدارة 🏆`);
+  } else if(userScore >= 80){
+    badge.textContent = `${userName} المحقق الكيميائي 🕵️‍♂️`;
+    setMascotText(`المستر: عاش يا بطل، كمل وماتوقفش! 🔥`);
+  } else if(userScore >= 40){
+    badge.textContent = `${userName} صانع الرواسب ⚪`;
+  } else {
+    badge.textContent = `${userName} مساعد معمل غلبان 🧪`;
+  }
+}
+
+function launchConfetti(){
+  const canvas = $('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let pieces = [];
+  for(let i=0; i<100; i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      color: ['#f97316','#22c55e','#06b6d4','#eab308','#a855f7'][Math.floor(Math.random()*5)],
+      size: Math.random()*8+4,
+      speed: Math.random()*5+2
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+      p.y += p.speed;
+    });
+    if(pieces.some(p=>p.y < canvas.height)) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+const $=id=>document.getElementById(id);
+const tabs=['📖 ملخص الشرح','💍 مأذون الكيميائي','🕵️ تحقيق المباحث','🚬 عصابة الرواسب','🎴 كروت المعركة','👥 تحدي PvP','🧮 حاسبة المولات'];
+tabs.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{playSound(clickAudio);go(i)};$('nav').appendChild(b)});
+function go(i){document.querySelectorAll('section').forEach((s,j)=>s.classList.toggle('on',i===j));[...$('nav').children].forEach((b,j)=>b.classList.toggle('on',i===j))}
+go(0);
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+
+const pairs=[
+  ['CO₃²⁻ + dil. HCl', 'CO₂ — lime water milky', '☁️ غاز CO₂ بيعكّر ماء الجير!', '#38bdf8', 'transparent', '#e2e8f0', successAudio],
+  ['HCO₃²⁻ + dil. HCl', 'CO₂ — MgSO₄ on heating', '☁️ غاز CO₂ مع التسخين والراسب الأبيض!', '#38bdf8', '#ffffff', '#e2e8f0', successAudio],
+  ['SO₃²⁻ + dil. HCl', 'SO₂ — K₂Cr₂O₇ paper green', '🟢 ورقة الدايكرومات اخضرت من SO₂ (ريحة نفاذة)!', '#22c55e', 'transparent', '#22c55e', successAudio],
+  ['S²⁻ + dil. HCl', 'H₂S — lead acetate black (PbS)', '🤢 حاسب! ريحة بيض فاسد وراسب PbS الأسود!', '#0f172a', '#0f172a', '#000000', successAudio],
+  ['S₂O₃²⁻ + dil. HCl', 'SO₂ + Yellow Sulphur ppt', '🟡 غاز نفاذ مع عكارة صفراء معلقة!', '#eab308', '#eab308', '#eab308', successAudio],
+  ['NO₂⁻ + dil. HCl', 'NO₂ brown fumes', '🟤 أبخرة بنية حمراء من غاز NO₂!', '#d97706', 'transparent', '#d97706', successAudio],
+  ['Cl⁻ + conc. H₂SO₄', 'HCl gas + NH₃ white fumes', '☁️ سحب بيضاء كثيفة من HCl مع النشادر!', '#f1f5f9', 'transparent', '#ffffff', successAudio],
+  ['Br⁻ + conc. H₂SO₄', 'Br₂ reddish-brown vapour', '🟠 أبخرة برتقالية حمراء تصفر النشا!', '#f97316', 'transparent', '#f97316', successAudio],
+  ['I⁻ + conc. H₂SO₄', 'I₂ violet vapour', '🟣 أبخرة اليود البنفسجية الساحرة!', '#a855f7', 'transparent', '#a855f7', successAudio],
+  ['NO₃⁻ + conc. H₂SO₄', 'Brown ring test', '🟤 تجربة الحلقة البنية الشهيرة بنجاح!', '#d97706', 'transparent', '#d97706', successAudio],
+  ['SO₄²⁻ + BaCl₂', 'BaSO₄ white ppt (insoluble)', '⬜ راسب أبيض BaSO₄ مابيدوبش في الحمض!', '#ffffff', '#ffffff', '#ffffff', successAudio],
+  ['PO₄³⁻ + BaCl₂', 'Ba₃(PO₄)₂ white ppt (soluble)', '⬜ راسب أبيض بيدوب في حمض HCl!', '#f8fafc', '#f8fafc', '#ffffff', successAudio],
+  ['Ag⁺ + dil. HCl', 'AgCl white ppt soluble', '⬜ راسب أبيض AgCl بيدوب في النشادر!', '#ffffff', '#ffffff', '#ffffff', successAudio],
+  ['Cu²⁺ + H₂S', 'CuS black ppt', '⬛ راسب أسود من CuS في الوسط الحمضي!', '#0f172a', '#0f172a', '#000000', successAudio],
+  ['Fe³⁺ + NH₄OH', 'Fe(OH)₃ reddish-brown ppt', '🟤 راسب بني محمر لـ Fe(OH)₃!', '#d97706', '#d97706', '#d97706', successAudio],
+  ['Al³⁺ + NH₄OH', 'Al(OH)₃ gelatinous white ppt', '⬜ راسب أبيض جيلاتيني لـ Al(OH)₃!', '#ffffff', '#ffffff', '#ffffff', successAudio]
+];
+
+let sel=null,done=0,tries=0,draggedItem=null;
+
+function m1(){
+ const L=sh(pairs.map((p,i)=>[p[0],i,p[2],p[3],p[4],p[5],p[6]])),R=sh(pairs.map((p,i)=>[p[1],i,p[2],p[3],p[4],p[5],p[6]]));
+ done=0;tries=0;sel=null;
+ $('g1').innerHTML=`
+  <div class="card">
+   <b>مأذون الكيميائي 💍 (معمل السحب والإفلات والذكاء الحي)</b>
+   <p class="sub">اسحب الأنبوبة وارميها في الدورق يا ${userName} أو اضغط لتوصيل الجوازة!</p>
+   
+   <div class="lab-layout">
+     <div class="lab-container">
+       <div class="test-tube" id="labTube">
+         <div class="tube-drop"></div>
+         <div class="tube-liquid" id="labLiquid"></div>
+         <div class="tube-ppt" id="labPpt"></div>
+         <div class="vapor-bubble"></div>
+       </div>
+     </div>
+     <div class="beaker-drop-zone" id="beakerZone" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropItem(event)" title="اسحب الأنبوبة هنا!">
+       <span style="font-size:11px;font-weight:700;color:var(--or2)">دورق التفاعل</span>
+     </div>
+     <div class="indicator-strip" id="indStrip" title="شريط المؤشر الحي">pH</div>
+   </div>
+   <div id="labMsg" style="text-align:center;font-size:0.88rem;font-weight:700;color:var(--or2);margin-bottom:10px;min-height:22px">المستر يراقبك يا ${userName}، هات الجوازة الصح! 🧪</div>
+
+   <div class="bar"><span>اتجوزوا: <b id="d1">0</b>/${pairs.length}</span><span>محاولات: <b id="t1">0</b></span></div>
+   <div class="grid" id="mg"></div>
+   <div id="mr" class="tip" style="display:none"></div>
+   <button class="btn g" onclick="playSound(clickAudio);m1()" style="margin-top:10px">عيد الجوازة من الأول</button>
+  </div>`;
+ const g=$('mg');
+ for(let i=0;i<pairs.length;i++){
+  [[L[i],'a'],[R[i],'b']].forEach(([v,k])=>{
+   const b=document.createElement('button');
+   b.className='m en';b.draggable=true;
+   b.dataset.k=k;b.dataset.i=v[1];b.dataset.fx=v[2];b.dataset.col=v[3];b.dataset.ppt=v[4];b.dataset.ind=v[5];
+   b.myAudio = v[6];
+   b.textContent=v[0];
+   
+   b.ondragstart = (e)=>{ draggedItem = b; b.classList.add('s'); };
+   b.ondragend = (e)=>{ b.classList.remove('s'); draggedItem = null; };
+   b.onclick=()=>pick(b);
+   
+   g.appendChild(b);
+  })
+ }
+}
+
+function allowDrop(e){ e.preventDefault(); $('beakerZone').classList.add('drag-over'); }
+function leaveDrop(e){ $('beakerZone').classList.remove('drag-over'); }
+function dropItem(e){
+ e.preventDefault();
+ $('beakerZone').classList.remove('drag-over');
+ if(draggedItem){ pick(draggedItem); }
+}
+
+function pick(b){
+ playSound(clickAudio);
+ if(!sel||sel.dataset.k===b.dataset.k){if(sel)sel.classList.remove('s');sel=b;b.classList.add('s');return}
+ tries++;$('t1').textContent=tries;const a=sel;a.classList.remove('s');sel=null;
+ 
+ const tube=$('labTube'), liquid=$('labLiquid'), ppt=$('labPpt'), msg=$('labMsg'), strip=$('indStrip');
+
+ if(a.dataset.i===b.dataset.i){
+  a.classList.add('d');b.classList.add('d');done++;$('d1').textContent=done;
+  addScore(10);
+  playSound(b.myAudio);
+  triggerVibration(50);
+  
+  tube.classList.add('tube-active', 'tube-foam');
+  liquid.style.background = b.dataset.col;
+  ppt.style.height = b.dataset.ppt !== 'transparent' ? '42%':'0%';
+  ppt.style.background = b.dataset.ppt;
+  strip.style.background = b.dataset.ind;
+  msg.textContent = b.dataset.fx;
+  setMascotText(`المستر: الله ينور يا دكتور ${userName}! جوازة تمام! 💍`);
+  setTimeout(()=>{ tube.classList.remove('tube-active', 'tube-foam'); }, 700);
+
+  if(done===pairs.length){
+   launchConfetti();
+   const r=$('mr');r.style.display='block';
+   r.innerHTML=`يا ${userName} خلصت كل الجوازات في ${tries} محاولة! مبروك قفلت الباب التاني 🎉<div class="meme-card"><img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiOkM/giphy.gif" alt="Success"></div>`;
+   msg.textContent = 'مبروك! المعمل كله بيحتفل بالدكتور 🥂';
+   setMascotText(`المستر: عظيم يا ${userName}! استحقيت كرسي أستاذ الكيمياء بامتياز! 👑`);
+  }
+ }else{
+  a.classList.add('x');b.classList.add('x');
+  // 🔊 [صوت الخطأ أو الانفجار] يشتغل هنا لما الجوازة تبوظ
+  playSound(failAudio);
+  triggerVibration([100, 50, 100]);
+  updatePanicBar(15);
+  
+  document.body.classList.add('screen-shake','flash-red');
+  setTimeout(()=>document.body.classList.remove('screen-shake','flash-red'), 400);
+
+  tube.classList.add('tube-active');
+  liquid.style.background = '#ef4444';
+  ppt.style.height = '0%';
+  strip.style.background = '#ef4444';
+  msg.textContent = `💥 يا ${userName} الجوازة باظت والمعمل اتدمر!`;
+  setMascotText(`المستر: إيه الهباب ده يا ${userName}؟! ركز واتقل! 🤦‍♂️`);
+  setTimeout(()=>{tube.classList.remove('tube-active');liquid.style.background='rgba(56,189,248,0.4)';strip.style.background='#e2e8f0';}, 600);
+  setTimeout(()=>{a.classList.remove('x');b.classList.remove('x')},500);
+ }
+}
+m1();
+
+/* تهيئة كروت المعركة (Chem-Cards TCG) */
+const chemCardsData = [
+  {name: "الكربونات CO₃²⁻", type: "أنيون أساسي", power: "قوة تفاعل حمض HCl", skill: "يعكّر ماء الجير ويدي CO₂", img: "☁️"},
+  {name: "الكبريتيت SO₃²⁻", type: "أنيون نفاذ", power: "ورقة الدايكرومات الخضراء", skill: "يخضر ورقة K₂Cr₂O₇ بريحة نفاذة", img: "🟢"},
+  {name: "اليوديد I⁻", type: "أنيون الأبخرة", power: "أبخرة اليود البنفسجية", skill: "يزرق ورقة النشا ومابينافسش", img: "🟣"},
+  {name: "الحديديك Fe³⁺", type: "كاتيون المجموعات", power: "راسب Fe(OH)₃ المحمر", skill: "يدي راسب بني محمر بـ NH₄OH", img: "🟤"},
+  {name: "النحاس Cu²⁺", type: "كاتيون الثقيلة", power: "راسب CuS الأسود", skill: "يترسب بـ H₂S في وسط حمضي", img: "⬛"},
+  {name: "الكبريتات SO₄²⁻", type: "مجموعة BaCl₂", power: "راسب BaSO₄ العنيد", skill: "أبيض لا يدوب في HCl نهائياً", img: "⬜"}
+];
+
+function initChemCards(){
+  const grid = $('cardBattleGrid');
+  grid.innerHTML = '';
+  chemCardsData.forEach(c=>{
+    const div = document.createElement('div');
+    div.className = 'chem-card-item';
+    div.innerHTML = `
+      <div style="font-size:2rem">${c.img}</div>
+      <b style="color:var(--or2);font-size:0.95rem">${c.name}</b>
+      <div style="margin:4px 0"><span class="card-badge">${c.type}</span></div>
+      <p style="font-size:0.8rem;color:var(--mut);margin:4px 0">⚔️ ${c.power}</p>
+      <p style="font-size:0.8rem;margin:4px 0">✨ المهارة: ${c.skill}</p>
+      <button class="btn g" style="padding:4px 10px;font-size:0.75rem;margin-top:6px" onclick="playCardAction('${c.name}')">استدعاء الكارت ⚡</button>
+    `;
+    grid.appendChild(div);
+  });
+}
+initChemCards();
+
+function playCardAction(cardName){
+  // 🔊 [صوت استدعاء الكارت] صوت حماسي عند اختيار الكارت
+  playSound(successAudio);
+  updatePanicBar(-5);
+  $('cardRes').innerHTML = `⚡ تم استدعاء كارت <b>${cardName}</b> بنجاح يا ${userName}! طاقة الكارت تضرب أسئلة الامتحان في مقتل! 🏆`;
+  setMascotText(`المستر: كارت قوي يا ${userName}! استخدمه صح في الامتحان! 🔥`);
+}
+
+/* لعبة تحدي المعمل الثنائي (PvP Mode - تبادل الأدوار) */
+let p1Score = 0;
+let p2Score = 0;
+
+function startPvPPlayer1(){
+  playSound(clickAudio);
+  p1Score = 0;
+  let p1Time = 30;
+  const area = $('pvpArea');
+  
+  setMascotText(`المستر: بدأ دور ${userName}! ورجينا شطارتك في الدقيقة دي! ⏱️`);
+  
+  const timer1 = setInterval(()=>{
+    p1Time--;
+    if(p1Time <= 0){
+      clearInterval(timer1);
+      playSound(successAudio);
+      // انتقال لدور الصاحب
+      startPvPPlayer2();
+    }
+  }, 1000);
+
+  function nextP1Q(){
+    if(p1Time <= 0) return;
+    const currentQ = sh(pairs)[0];
+    area.innerHTML = `
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px">
+        <h3 style="color:var(--or2);margin-top:0">دور اللاعب الأول: ${userName} 🧑‍🔬</h3>
+        <div class="bar"><span>الوقت باقي: <b>${p1Time}ث</b></span><span>سكور ${userName}: <b>${p1Score}</b></span></div>
+        <p style="font-weight:700;margin:8px 0">ما هو التفاعل أو الناتج الصحيح لهذا العنصر؟</p>
+        <p style="color:var(--or2);font-weight:800">${currentQ[0]}</p>
+        <div id="p1Opts" style="margin-top:8px"></div>
+      </div>
+    `;
+    const optsDiv = $('p1Opts');
+    const wrongOpt = sh(pairs.filter(p=>p[1]!==currentQ[1]))[0][1];
+    sh([currentQ[1], wrongOpt]).forEach((ans)=>{
+      const btn = document.createElement('button');
+      btn.className = 'opt en';
+      btn.textContent = ans;
+      btn.onclick = ()=>{
+        if(ans === currentQ[1]){
+          playSound(successAudio);
+          p1Score++;
+          updatePanicBar(-5);
+        } else {
+          playSound(failAudio);
+          p1Score = Math.max(0, p1Score - 1);
+          updatePanicBar(10);
+        }
+        if(p1Time > 0) nextP1Q();
+      };
+      optsDiv.appendChild(btn);
+    });
+  }
+  nextP1Q();
+}
+
+function startPvPPlayer2(){
+  let p2Time = 30;
+  const area = $('pvpArea');
+  setMascotText("المستر: خلص دور عز! يلا دور صاحبك يثبت نفسه! 🔄");
+  
+  const timer2 = setInterval(()=>{
+    p2Time--;
+    if(p2Time <= 0){
+      clearInterval(timer2);
+      playSound(successAudio);
+      showPvPWinner();
+    }
+  }, 1000);
+
+  function nextP2Q(){
+    if(p2Time <= 0) return;
+    const currentQ = sh(pairs)[0];
+    area.innerHTML = `
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px">
+        <h3 style="color:var(--or2);margin-top:0">دور صاحبك (المنافس) ⚔️</h3>
+        <div class="bar"><span>الوقت باقي: <b>${p2Time}ث</b></span><span>سكور صاحبك: <b>${p2Score}</b></span></div>
+        <p style="font-weight:700;margin:8px 0">ما هو التفاعل أو الناتج الصحيح لهذا العنصر؟</p>
+        <p style="color:var(--or2);font-weight:800">${currentQ[0]}</p>
+        <div id="p2Opts" style="margin-top:8px"></div>
+      </div>
+    `;
+    const optsDiv = $('p2Opts');
+    const wrongOpt = sh(pairs.filter(p=>p[1]!==currentQ[1]))[0][1];
+    sh([currentQ[1], wrongOpt]).forEach((ans)=>{
+      const btn = document.createElement('button');
+      btn.className = 'opt en';
+      btn.textContent = ans;
+      btn.onclick = ()=>{
+        if(ans === currentQ[1]){
+          playSound(successAudio);
+          p2Score++;
+        } else {
+          playSound(failAudio);
+          p2Score = Math.max(0, p2Score - 1);
+        }
+        if(p2Time > 0) nextP2Q();
+      };
+      optsDiv.appendChild(btn);
+    });
+  }
+  nextP2Q();
+}
+
+function showPvPWinner(){
+  const area = $('pvpArea');
+  let winnerText = "";
+  if(p1Score > p2Score){
+    winnerText = `🏆 الفائز هو ${userName} بامتياز! صاحبك خد صفر بجدارة!`;
+    setMascotText(`المستر: ${userName} اكتسح المعمل وقعد على الكرسي! 👑`);
+  } else if(p2Score > p1Score){
+    winnerText = `🏆 الفائز هو صاحبك! ${userName} للأسف خد صفر في التحدي!`;
+    setMascotText(`المستر: يا ${userName} صاحبك غلبك! شد حيلك! 😂`);
+  } else {
+    winnerText = `🤝 تعادل تاريخي بين ${userName} وصاحبكم! المعمل كله دمه حامي!`;
+    setMascotText(`المستر: تعادل عادل، اتفضلوا أنتم الاتنين ذاكروا! 📚`);
+  }
+
+  area.innerHTML = `
+    <div class="card" style="text-align:center">
+      <h3 style="color:var(--or2)">نتيجة معركة المعمل الثنائية 📊</h3>
+      <p>نقاط ${userName}: <b>${p1Score}</b></p>
+      <p>نقاط صاحبك: <b>${p2Score}</b></p>
+      <p style="font-weight:800;font-size:1.05rem;margin:10px 0">${winnerText}</p>
+      <button class="btn" onclick="startPvPPlayer1()">العبوا تحدي تاني 🔄</button>
+    </div>
+  `;
+}
+
+/* Quiz engines للمباحث والعصابة */
+function quiz(el,title,intro,Q){
+ let i=0,sc=0,q=sh(Q);
+ function draw(){
+  const c=$(el);
+  if(i>=q.length){
+   const isPerfect = sc === q.length;
+   if(isPerfect) launchConfetti();
+   c.innerHTML=`<div class="card"><b>${title}</b><p>النتيجة النهائية يا ${userName}: <b style="color:var(--or2)">${sc}/${q.length}</b> — ${isPerfect?'يا عم العبقري، مبروك مخدتش صفر! 🏆':'يا دكتور خد صفر بجدارة! ذاكر وارجع تاني 📚'}</p>
+   <div class="meme-card"><img src="${isPerfect?'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif':'https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif'}" alt="Meme"></div>
+   <button class="btn" id="${el}r" style="margin-top:10px">حاول تاني</button></div>`;
+   $(el+'r').onclick=()=>{playSound(clickAudio);i=0;sc=0;q=sh(Q);draw()};return;
+  }
+  const x=q[i];
+  c.innerHTML='<div class="card"><b>'+title+'</b><p class="sub">'+intro+'</p><div class="bar"><span>سؤال <b>'+(i+1)+'</b>/'+q.length+'</span><span>سكور: <b>'+sc+'</b></span></div><p style="font-weight:600">'+x.q+'</p><div id="'+el+'o"></div><div class="tip" id="'+el+'f" style="display:none"></div></div>';
+  sh(x.o.map((t,k)=>[t,k])).forEach(([t,k])=>{
+   const b=document.createElement('button');b.className='opt en';b.style.textAlign='left';b.textContent=t;
+   b.onclick=()=>{
+    playSound(clickAudio);
+    [...$(el+'o').children].forEach(n=>n.onclick=null);
+    const ok=k===0;
+    if(ok){
+      sc++;
+      addScore(15);
+      playSound(successAudio);
+      triggerVibration(50);
+      setMascotText(`المستر: تفكير سليم يا ${userName}! واصل كده! 🌟`);
+    } else {
+      playSound(failAudio);
+      triggerVibration([100, 50, 100]);
+      updatePanicBar(15);
+      setMascotText(`المستر: غلط يا ${userName}! ركز في صيغة السؤال كويس! ❌`);
+      document.body.classList.add('screen-shake');
+      setTimeout(()=>document.body.classList.remove('screen-shake'), 400);
+    }
+    b.classList.add(ok?'ok':'no');
+    if(!ok)[...$(el+'o').children].find(n=>n.textContent===x.o[0]).classList.add('ok');
+    const f=$(el+'f');f.style.display='block';
+    f.innerHTML=(ok?'عاش يا فنان! ✅ ':'يا دكتور خد صفر ❌ ')+x.e+'<br><button class="btn" style="margin-top:8px" id="'+el+'n">'+(i+1<q.length?'اللي بعده يا دكتور':'النتيجة النهائية')+'</button>';
+    $(el+'n').onclick=()=>{playSound(clickAudio);i++;draw()};
+   };
+   $(el+'o').appendChild(b);
+  });
+ }
+ draw();
+}
+
+quiz('g2','تحقيق المباحث الكيميائية 🕵️','اتسرق السيزيوم من المعمل يا دكتور! حدّد المجرم من الأدلة عشان ما تتحولش لتحقيق وتأخد صفر.',[
+{q:'المتهم + dil. HCl طلّع غاز ريحته كبريت محروق خانقة، وورقة dichromate بقت خضرا. مين هو؟',o:['SO₃²⁻ (Sulphite)','S²⁻ (Sulphide)','CO₃²⁻ (Carbonate)','NO₂⁻ (Nitrite)'],e:'SO₂ + ورقة K₂Cr₂O₇ المحمضة بتخضرّ = Sulphite.'},
+{q:'غاز ريحة بيض فاسد وورقة lead acetate اسودّت. الأنيون؟',o:['S²⁻ (Sulphide)','SO₃²⁻ (Sulphite)','Cl⁻ (Chloride)','SO₄²⁻ (Sulphate)'],e:'H₂S + PbS الأسود = Sulphide.'},
+{q:'مع conc. H₂SO₄ طلعت أبخرة بنفسجي. إيه اللي في الأنبوبة؟',o:['I⁻ (Iodide)','Br⁻ (Bromide)','Cl⁻ (Chloride)','NO₃⁻ (Nitrate)'],e:'Violet vapour = I₂ يعني Iodide. وAgNO₃ هيدّي راسب أصفر مابيدوبش في NH₄OH.'},
+{q:'مع BaCl₂ طلع راسب أبيض ومابيدوبش في dil. HCl. الأنيون؟',o:['SO₄²⁻ (Sulphate)','CO₃²⁻ (Carbonate)','SO₃²⁻ (Sulphite)','Cl⁻ (Chloride)'],e:'BaSO₄ هو الراسب الوحيد اللي مابيدوبش في الحمض.'},
+{q:'مع dil. HCl طلع CO₂، وبعد إضافة MgSO₄ على البارد ماحصلش راسب. هو؟',o:['HCO₃⁻ (Bicarbonate)','CO₃²⁻ (Carbonate)','NO₂⁻ (Nitrite)','S²⁻ (Sulphide)'],e:'Bicarbonate مابيرسّبش مع MgSO₄ على البارد، لكن Carbonate بيرسّب.'},
+{q:'محلول المشتبه فيه + NH₄OH (بوجود NH₄Cl) أدّى راسب بني محمر. الكاتيون؟',o:['Fe³⁺','Al³⁺','Cr³⁺','Zn²⁺'],e:'Fe(OH)₃ لونه reddish-brown.'}
+]);
+
+quiz('g3','عصابة الرواسب والغازات 🚬','عرّف كل واحد من العصابة من اسمه وصفاته عشان ما يتنصبش عليك.',[
+{q:'راسب أبيض بيدوب في NH₄OH:',o:['AgCl','PbCl₂','BaSO₄','AgI'],e:'AgCl بيكوّن complex ion ويدوب.'},
+{q:'راسب أبيض بيدوب في الماء الساخن (Group 1 Cations):',o:['PbCl₂','AgCl','BaSO₄','CaCO₃'],e:'PbCl₂ بيدوب في الماء الساخن.'},
+{q:'الراسب الأسود في Group 2 اللي مابيطلعش في Group 4 بس:',o:['CuS','CdS','ZnS','Mn(OH)₂'],e:'CuS أسود وبيترسب بـ H₂S في وسط حمضي.'},
+{q:'راسب جيلاتيني أبيض في Group 3:',o:['Al(OH)₃','Fe(OH)₃','Cr(OH)₃','ZnS'],e:'Al(OH)₃ أبيض جيلاتيني.'},
+{q:'راسب أصفر مابيدوبش في NH₄OH:',o:['AgI','AgBr','AgCl','PbCl₂'],e:'AgI أصفر ومابيدوبش نهائياً.'}
+]);
+
+/* حاسبة المولات والمعايرة والنقاوة */
+const v=id=>{const s=document.getElementById(id).value.trim();return s===''?null:parseFloat(s)};
+const f=n=>Number.isFinite(n)?+n.toPrecision(5):'—';
+function tit(){
+ playSound(clickAudio);
+ const k=['Ma','Va','na','Mb','Vb','nb'],x={};
+ k.forEach(a=>x[a]=v(a));
+ const e=k.filter(a=>x[a]===null);
+ if(e.length!==1){$('r1').textContent='يا دكتور سيب خانة واحدة بس فاضية!';return}
+ const u=e[0];let r;
+ if(u==='Ma')r=x.Mb*x.Vb*x.na/(x.Va*x.nb);else if(u==='Va')r=x.Mb*x.Vb*x.na/(x.Ma*x.nb);
+ else if(u==='Mb')r=x.Ma*x.Va*x.nb/(x.Vb*x.na);else if(u==='Vb')r=x.Ma*x.Va*x.nb/(x.Mb*x.na);
+ else if(u==='na')r=x.Ma*x.Va*x.nb/(x.Mb*x.Vb);else r=x.Mb*x.Vb*x.na/(x.Ma*x.Va);
+ $('r1').textContent=u+' = '+f(r);
+}
+function wc(){
+ playSound(clickAudio);
+ const a=v('mh'),b=v('ma'),M=v('MM');
+ if([a,b,M].includes(null)||a<=b){$('r2').textContent='يا دكتور دخّل القيم صح، كتلة المتهدرت لازم تبقى أكبر!';return}
+ const X=((a-b)/18)/(b/M);
+ $('r2').textContent='X = '+f(X)+'\nRounded: '+Math.round(X)+' H₂O';
+}
+function pur(){
+ playSound(clickAudio);
+ const s=v('ms'),p=v('mp'),Mp=v('Mp'),Mc=v('Mc'),r=v('rt')||1;
+ if([s,p,Mp,Mc].includes(null)){$('r3').textContent='كمّل الخانات الأولى يا هندسة.';return}
+ const pure=p/Mp*r*Mc,P=pure/s*100;
+ $('r3').textContent='Mass pure = '+f(pure)+' g\nPurity = '+f(P)+' %';
+}
+function cp(id){
+ playSound(clickAudio);
+ const t=$(id).textContent;if(!t)return;
+ navigator.clipboard.writeText(t);
+ const o=$(id).textContent;$(id).textContent='تم النسخ ✅\n'+o;setTimeout(()=>$(id).textContent=o,900);
+}
+</script>
+</body>
+</html>
