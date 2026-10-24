@@ -76,6 +76,49 @@ label{font-size:.8rem;color:var(--mut)}
 @keyframes wob{50%{filter:blur(2px) hue-rotate(40deg)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<style id="crg-css">
+#t6{position:fixed;inset:0;z-index:60;background:#000;margin:0;padding:0}
+#t6.on{display:flex;align-items:center;justify-content:center}
+body.crg-on{overflow:hidden}
+body.crg-on #mas{display:none} 
+#t6 .crgFrame{position:relative;height:100vh;height:100dvh;width:min(100vw,calc(100dvh * 9 / 16));overflow:hidden;background:#050811}
+@media (max-aspect-ratio:9/16){#t6 .crgFrame{width:100vw}} 
+#t6 .crgFrame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#t6 .crgFrame img.in{animation:crgFade .8s ease}
+@keyframes crgFade{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:none}}
+#t6 .crgPh{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-weight:900;color:var(--mut);background:radial-gradient(circle,#0c1530,#050811)}
+#t6 .crgFrame::after{content:'';position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);pointer-events:none}
+#t6 .crgFrame.fail{box-shadow:inset 0 0 0 4px var(--bad),inset 0 0 90px rgba(239,68,68,.65);animation:crgShake .35s 2}
+@keyframes crgShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+#t6 .crgTop{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));left:10px;right:10px;z-index:6;display:flex;justify-content:space-between;align-items:center;gap:8px;direction:ltr}
+#t6 .crgGlass{background:rgba(5,8,17,.45);border:1px solid rgba(255,255,255,.28);color:#fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:14px;padding:6px 14px;font-weight:900;font-size:.95rem}
+#t6 #crgBack{border-color:var(--or)}            
+#t6 .crgTop span.sp button{padding:6px 10px;margin-left:6px}
+#t6 #crgMusic.off{opacity:.55}
+#t6 .crgHud{font-size:.72rem;font-weight:700;background:rgba(5,8,17,.45);border:1px solid rgba(249,115,22,.7);color:var(--or);border-radius:10px;padding:0 10px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);max-width:40%;text-align:center}
+
+#t6 .crgBox{position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:5;max-height:52%;overflow:auto;
+ background:rgba(8,12,26,.38);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:10px 14px;
+ backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 8px 32px rgba(0,0,0,.45);animation:crgFade .5s ease;transition:opacity .3s}
+#t6 .crgBox.hide{opacity:0;pointer-events:none}     
+#t6 .crgWho{display:inline-block;font-size:.72rem;font-weight:900;color:#1a0b00;background:var(--or);border-radius:8px;padding:0 10px;margin-bottom:4px}
+#t6 .crgTxt{font-size:.98rem;line-height:1.7;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+#t6 .crgBtns{margin-top:8px}
+#t6 .crgBtns button{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#t6 .crgBtns button.opt{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);direction:ltr;text-align:left}
+#t6 .crgBtns button.opt.ok{background:rgba(34,197,94,.45);border-color:var(--ok)}
+#t6 .crgBtns button.opt.no{background:rgba(239,68,68,.45);border-color:var(--bad)}
+#t6 .crgBtns button.pri{width:100%;padding:10px;font-size:1rem}
+#t6 .crgNext{font-size:1.2rem!important;padding:14px!important;box-shadow:0 0 22px var(--or);animation:crgPulse 1.1s ease-in-out infinite}
+@keyframes crgPulse{50%{box-shadow:0 0 38px var(--or),0 0 8px #fff}}
+
+#t6 .crgConf{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+#t6 .crgConf span{position:absolute;top:-30px;font-size:1.5rem;animation:crgFall 2.6s linear infinite}
+@keyframes crgFall{to{transform:translateY(110vh) rotate(360deg)}}
+</style>
+
+</head> 3zZ_GadElRab
 <style id="mr-additions-css">
 #mrPop{position:fixed;top:calc(84px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-16px) scale(.92);z-index:40;display:flex;align-items:center;gap:10px;
  background:rgba(5,8,17,.93);border:1px solid var(--cy);border-radius:18px;padding:8px 12px;max-width:min(360px,calc(100vw - 24px));
@@ -140,7 +183,7 @@ label{font-size:.8rem;color:var(--mut)}
 
 
 <section class="tab" id="t1">
- <div class="glass"><h2>💍ورايا علي المعمل يا لوكسسسسس</h2>
+ <div class="glass"><h2>💍ورايا علي المعمل يا لوكسسس</h2>
   <div id="stage"><div id="cap" dir="ltr">اختر المتفاعل ثم الناتج الصحيح</div></div>
   <div id="leg" class="glass" hidden style="margin:10px 0 0;font-size:.88rem;text-align:center"><span class="sw" id="sw0"></span><span id="ln0"></span> ➜ <span class="sw" id="sw1"></span><span id="ln1"></span><div id="lty" class="fb"></div></div>
   <div class="mg"><div id="mR" dir="ltr"></div><div id="mP" dir="ltr"></div></div>
@@ -405,18 +448,204 @@ $('#qpGo').onclick=()=>{const ms=v('#q_ms'),mp=v('#q_mp'),Mp=v('#q_Mp'),Mc=v('#q
 
 init3D();mNew();qRender();pvIntro();setPanic(20);
 </script>
+<script id="crg-js">
+
+const CRG_IMG_DIR = '';  
+const CRG_IMG = n => CRG_IMG_DIR + 'img' + n + '.jpg';
+
+const CRG_AUDIO = {
+  bgm:   'lappp.mp3', // 👈 غيّر هنا: ملف موسيقى التشويق (بيتكرر Loop)  مثال: 'sounds/suspense.mp3'
+  alarm: 'alarm.mp3'  // 👈 غيّر هنا: ملف صوت إنذار الخطر عند الإجابة الغلط  مثال: 'sounds/alarm.mp3'
+};
+
+const CRG_STORY = {
+  intro: [ // 📍 المقدمة (img1–img3)
+    {img:1,t:'خارج المنشأة… الليل ساكت والمعمل المهجور واقف قدامك يا دكتور {n}.',b:'اضغط للبدء 👆'},
+    {img:2,t:'الهاتف المشفّر بيرن… رسالة مجهولة: «الأدلة جوه القبو. ماتتأخرش.»'},
+    {img:3,t:'صندوق أثري قديم مقفول بإحكام… جواه أدوات التحقيق. يلا ننزل.'}
+  ],
+  levels: [
+    { // 📍 المستوى 1: Sulphite (img4–img10)
+      title:'Sulphite — SO₃²⁻',
+      pre:[
+        {img:4,t:'بتنزل السلم للقبو… كل خطوة صوتها بيتردد حواليك.'},
+        {img:5,t:'الأبواب اتقفلت وراك والإنذار اشتغل! مفيش مفر غير إنك تحل اللغز.'},
+        {img:6,t:'بتفتح حقيبة الأدوات: ورق كواشف وأنابيب ومحاليل.'},
+        {img:7,t:'في إيدك ورقة اختبار برتقالية. الأنيون المجهول + dil. HCl طلّع غاز ريحته خانقة.'}
+      ],
+      q1:{t:'اختر الكاشف المناسب للغاز ده:',o:['Acidified K₂Cr₂O₇ paper','Lead acetate paper','Starch paper','Lime water'],a:0,
+          ok:[{img:8,t:'الورقة اتحوّلت من البرتقالي للأخضر! SO₂ اختزل Cr₂O₇²⁻ إلى Cr³⁺.'}]},
+      q2:{t:'الأنيون المجهول هو؟',o:['Sulphite – SO₃²⁻','Sulphide – S²⁻','Carbonate – CO₃²⁻','Nitrite – NO₂⁻'],a:0,
+          ok:[{img:9,t:'SO₃²⁻ + 2H⁺ → H₂O + SO₂↑ — الأدلة كلها متطابقة.'},{img:10,t:'الباب الأول اتفتح… نجحت يا دكتور {n}!'}]}
+    },
+    { // 📍 المستوى 2: Sulphide (img11–img18)
+      title:'Sulphide — S²⁻',
+      pre:[
+        {img:11,t:'المستوى التاني… الجو بقى أتقل والريحة اتغيّرت.'},
+        {img:12,t:'في أنبوبة عينة جديدة مجهولة على الترابيزة.'},
+        {img:13,t:'بتضيف dil. HCl على العينة…'},
+        {img:14,t:'غاز بريحة بيض فاسد بيتصاعد من الأنبوبة!'},
+        {img:15,t:'محتاج كاشف يثبّت نوع الغاز ده.'}
+      ],
+      q1:{t:'اختر الكاشف المناسب:',o:['Lead acetate paper – Pb(CH₃COO)₂','Acidified K₂Cr₂O₇ paper','Starch paper','Litmus paper'],a:0,
+          ok:[{img:16,t:'الورقة اتحوّلت للأسود! تكوّن PbS.'}]},
+      q2:{t:'الأنيون المجهول هو؟',o:['Sulphide – S²⁻','Sulphite – SO₃²⁻','Chloride – Cl⁻','Sulphate – SO₄²⁻'],a:0,
+          ok:[{img:17,t:'S²⁻ + 2H⁺ → H₂S↑ ; Pb²⁺ + H₂S → PbS↓ + 2H⁺'},{img:18,t:'الباب التاني اتفتح… كمّل يا بطل!'}]}
+    },
+    { // 📍 المستوى 3: Iodide (img19–img24)
+      title:'Iodide — I⁻',
+      pre:[
+        {img:19,t:'المستوى التالت… غرفة مليانة أنابيب وزجاجات.'},
+        {img:20,t:'عينة جديدة + conc. H₂SO₄.'},
+        {img:21,t:'أبخرة بنفسجية بتطلع من الأنبوبة!'},
+        {img:22,t:'لازم تثبت نوع البخار ده.'}
+      ],
+      q1:{t:'اختر طريقة الكشف:',o:['Expose to Starch paper','Expose to Lead acetate paper','Expose to Acidified K₂Cr₂O₇ paper','Add BaCl₂ solution'],a:0,
+          ok:[{img:23,t:'الورقة اتحوّلت للأزرق الداكن! I₂ + نشا.'}]},
+      q2:{t:'الأنيون المجهول هو؟',o:['Iodide – I⁻','Bromide – Br⁻','Chloride – Cl⁻','Nitrate – NO₃⁻'],a:0,
+          ok:[{img:24,t:'2HI + H₂SO₄ → I₂ + SO₂ + 2H₂O — اليوديد اتأكد!'}]}
+    },
+    { // 📍 المستوى 4: Sulphate (img25–img29 ثم img32)
+      title:'Sulphate — SO₄²⁻',
+      pre:[
+        {img:25,t:'المستوى الأخير… آخر باب قدامك.'},
+        {img:26,t:'بتضيف محلول BaCl₂ للعينة.'},
+        {img:27,t:'راسب أبيض بيتكوّن في الأنبوبة.'},
+        {img:28,t:'سؤال الحسم: الراسب ده بيذوب في الحمض ولا لأ؟'}
+      ],
+      q1:{t:'اختر الخطوة المناسبة:',o:['Add dil. HCl to check solubility','Expose to Starch paper','Add Lead acetate paper','Heat with MgSO₄'],a:0,
+          ok:[{img:null,t:'الراسب ثابت ومش بيذوب في dil. HCl — ده BaSO₄!'}]},
+      q2:{t:'الأنيون المجهول هو؟',o:['Sulphate – SO₄²⁻','Carbonate – CO₃²⁻','Phosphate – PO₄³⁻','Sulphite – SO₃²⁻'],a:0,
+          ok:[{img:29,t:'Ba²⁺ + SO₄²⁻ → BaSO₄↓ — راسب أبيض مش بيذوب في الحمض.'}]},
+      last:true
+    }
+  ],
+  fail:  {img:30,t:'❌ إجابة غلط! الإنذار اشتغل… حاول تاني بتركيز.'},       // 📍 صورة الفشل img30
+  faint: {img:31,t:'😵‍💫 الدكتور {n} أُغمي عليه! التوتر وصل 100%.'},          // 📍 صورة الإغماء img31
+  win:   {img:32,t:'🏆 مبروك يا دكتور {n}! فتحت كل الأبواب وحليت اللغز كله!'}  // 📍 شاشة الفوز img32
+};
+
+(function(){
+'use strict';
+
+let ac=null, master=null, droneOn=false, musicOn=true, musicStarted=false, paused=true, bgmFile=null, hbT=0; // paused=true: الموسيقى ما بتشتغلش خالص قبل دخول تاب Cinema RPG
+try{musicOn=localStorage.getItem('crg_music')!=='0'}catch(e){}
+function ctxGet(){try{if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=musicOn?1:0;master.connect(ac.destination)}if(ac.state==='suspended')ac.resume();return ac}catch(e){return null}}
+function thump(t,v){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(75,t);o.frequency.exponentialRampToValueAtTime(38,t+.16);
+  g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.2);o.connect(g);g.connect(master);o.start(t);o.stop(t+.22)}
+function beatLoop(){ clearTimeout(hbT); if(!ac||!droneOn||paused)return;
+  const p=(typeof panic==='number'?panic:20)/100, now=ac.currentTime+.05;
+  thump(now,.22+.12*p);thump(now+.22,.14+.1*p);                         // "دوم-دوم"
+  if(Math.random()<.18+.3*p){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=[1397,1480,1760][Math.floor(Math.random()*3)]; // نغمة توتر عالية متنافرة
+    g.gain.setValueAtTime(.0001,now+.3);g.gain.exponentialRampToValueAtTime(.025+.02*p,now+.45);g.gain.exponentialRampToValueAtTime(.0001,now+1.1);o.connect(g);g.connect(master);o.start(now+.3);o.stop(now+1.2)}
+  hbT=setTimeout(beatLoop,1250-700*p);                                  // كل ما التوتر يزيد النبض يسرع
+}
+function startDrone(){ if(droneOn)return; const c=ctxGet(); if(!c)return; droneOn=true;
+  const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=220;lp.Q.value=4;lp.connect(master);
+  [55,55.6,82.4].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.type=i<2?'sawtooth':'triangle';o.frequency.value=f;g.gain.value=i<2?.05:.04;o.connect(g);g.connect(lp);o.start()});
+  const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=.12;lg.gain.value=110;lfo.connect(lg);lg.connect(lp.frequency);lfo.start(); // الفلتر بيفتح ويقفل ببطء
+  beatLoop();
+}
+function startMusic(){ if(musicStarted)return; musicStarted=true;
+  if(CRG_AUDIO.bgm){try{bgmFile=new Audio(CRG_AUDIO.bgm);bgmFile.loop=true;bgmFile.volume=.5;bgmFile.muted=!musicOn;bgmFile.play().catch(()=>{bgmFile=null;startDrone()})}catch(e){bgmFile=null;startDrone()}}
+  else startDrone();
+}
+function setMusic(on){ musicOn=on; try{localStorage.setItem('crg_music',on?'1':'0')}catch(e){}
+  if(master)master.gain.setTargetAtTime(on?1:0,ac.currentTime,.05); if(bgmFile)bgmFile.muted=!on;
+  btn.textContent=on?'🔊':'🔇'; btn.classList.toggle('off',!on); btn.title=on?'إيقاف الموسيقى':'تشغيل الموسيقى'; }
+function alarm(){ try{ if(CRG_AUDIO.alarm){const a=new Audio(CRG_AUDIO.alarm);a.play().catch(siren);return} siren() }catch(e){} }
+function siren(){const c=ctxGet();if(!c)return;for(let i=0;i<6;i++){[0,.17].forEach((d,k)=>{const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+i*.34+d;
+  o.type='square';o.frequency.setValueAtTime(k?640:960,t);g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.17)})}}
+
+/* 📍 إيقاف مؤقت / استئناف الموسيقى (بيُستدعوا من زر Back ومن دخول التاب) — الموسيقى مش بتشتغل أبداً عند فتح الموقع */
+function pauseMusic(){ paused=true; clearTimeout(hbT); try{if(ac&&ac.state==='running')ac.suspend()}catch(e){} if(bgmFile)bgmFile.pause(); }
+function resumeMusic(){ paused=false; startMusic(); try{if(ac&&ac.state==='suspended')ac.resume()}catch(e){} if(bgmFile&&musicOn)bgmFile.play().catch(()=>{}); if(droneOn)beatLoop(); }
+
+const sec=document.createElement('section'); sec.className='tab'; sec.id='t6'; // 📍 بيتضاف بعد التابات القديمة فيبقى ترتيبه السابع (index 6)
+sec.innerHTML='<div class="crgFrame" id="crgFrame"><div class="crgPh" id="crgPh" hidden></div><img id="crgImg" alt=""><div class="crgConf" id="crgConf"></div>'+
+ '<div class="crgTop"><button type="button" class="crgGlass" id="crgBack">⬅️ Back</button><span class="crgHud" id="crgHud"></span>'+
+ '<span class="sp"><button type="button" class="crgGlass" id="crgEye" title="إخفاء/إظهار الحوار">👁</button><button type="button" class="crgGlass" id="crgMusic"></button></span></div>'+
+ '<div class="crgBox" id="crgBox"><span class="crgWho" id="crgWho"></span><div class="crgTxt" id="crgTxt"></div><div class="crgBtns" id="crgBtns"></div></div></div>';
+document.body.appendChild(sec);
+const btn=$('#crgMusic'); btn.onclick=()=>{startMusic();setMusic(!musicOn)}; setMusic(musicOn); // 📍 زر الموسيقى (داخل شاشة القصة)
+$('#crgEye').onclick=()=>$('#crgBox').classList.toggle('hide');                                // 📍 إخفاء الحوار لرؤية الصورة كاملة
+$('#crgBack').onclick=()=>go(0);                                                               // 📍 زر ⬅️ Back: رجوع فوري للصفحة الرئيسية (والـ go بتوقف الموسيقى مؤقتاً)
+const nb=document.createElement('button'); nb.dataset.i='6'; nb.innerHTML='<b>🎬</b>Cinema RPG'; // 📍 زر الـ nav الجديد
+nb.onclick=()=>go(6); $('#nav').appendChild(nb);
+
+const nodes=[]; // 📍 بنحوّل CRG_STORY لسلسلة خطوات: مشهد / سؤال / نهاية مستوى / فوز
+CRG_STORY.intro.forEach(s=>nodes.push({k:'s',lv:0,s}));
+CRG_STORY.levels.forEach((L,i)=>{const lv=i+1;
+  L.pre.forEach(s=>nodes.push({k:'s',lv,s}));
+  nodes.push({k:'q',lv,q:L.q1,kind:'الكاشف'}); L.q1.ok.forEach(s=>nodes.push({k:'s',lv,s}));
+  nodes.push({k:'q',lv,q:L.q2,kind:'الأنيون'}); L.q2.ok.forEach(s=>nodes.push({k:'s',lv,s}));
+  if(L.last)nodes.push({k:'win',lv}); else nodes.push({k:'end',lv,title:L.title});
+});
+let idx=0, fainted=false, active=false, failT=0, curImg=null;
+const el={f:$('#crgFrame'),img:$('#crgImg'),ph:$('#crgPh'),hud:$('#crgHud'),who:$('#crgWho'),txt:$('#crgTxt'),btns:$('#crgBtns'),conf:$('#crgConf')};
+const nm=s=>(s||'').replace(/\{n\}/g,NAME||'عز');
+
+function setImg(n){ if(n==null)return; curImg=n; el.img.classList.remove('in'); void el.img.offsetWidth;
+  el.img.onerror=()=>{el.img.removeAttribute('src');el.ph.hidden=false;el.ph.textContent='🎬 img'+n+'.jpg'}; // الصورة مش موجودة → بنظهر اسم الملف المطلوب
+  el.img.onload=()=>{el.ph.hidden=true};
+  el.ph.hidden=true; el.img.src=CRG_IMG(n); el.img.classList.add('in'); }
+function confetti(on){ el.conf.innerHTML=''; if(!on)return;
+  for(let i=0;i<30;i++){const s=document.createElement('span');s.textContent=['🎉','✨','🧪','⭐','🏆'][i%5];s.style.left=(Math.random()*95)+'%';s.style.animationDelay=(Math.random()*2.4)+'s';s.style.animationDuration=(2+Math.random()*1.6)+'s';el.conf.appendChild(s)} }
+function say2(who,t){el.who.textContent=who;el.txt.textContent=nm(t);el.txt.parentNode.style.animation='none';void el.txt.offsetWidth;el.txt.parentNode.style.animation=''}
+function mkBtn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className=cls||'';b.textContent=label;b.onclick=fn;el.btns.appendChild(b);return b}
+function hud(lv){el.hud.textContent=lv?('Level '+lv+' / '+CRG_STORY.levels.length+' — '+CRG_STORY.levels[lv-1].title):'Prologue'}
+function advance(){idx=Math.min(idx+1,nodes.length-1);render()}
+
+function render(){ clearTimeout(failT); $('#crgBox').classList.remove('hide'); el.f.classList.remove('fail'); el.btns.innerHTML=''; confetti(false);
+  if(fainted){ // 📍 حالة الإغماء: img31 + زر "إعادة من جديد"
+    setImg(CRG_STORY.faint.img); hud(0); el.hud.textContent='😵‍💫'; say2('النظام',CRG_STORY.faint.t);
+    mkBtn('إعادة من جديد 🔄','pri',()=>{fainted=false;idx=0;setPanic(20);render()}); return }
+  const n=nodes[idx]; hud(n.lv);
+  if(n.k==='s'){ if(n.s.img!=null)setImg(n.s.img); say2(n.lv?'المحقق':'الراوي',n.s.t);
+    mkBtn(n.s.b||'التالي ▶','pri',advance);
+    const nx=nodes[idx+1]; if(nx&&nx.k==='s'&&nx.s.img!=null){(new Image()).src=CRG_IMG(nx.s.img)} } // تحميل مسبق للصورة اللي بعدها
+  else if(n.k==='q'){ say2('سؤال '+n.kind,n.q.t);
+    shuffle(n.q.o.map((t,k)=>[t,k])).forEach(([t,k])=>{const b=mkBtn(t,'opt',()=>answer(b,k===n.q.a));b.style.direction='ltr';b.style.textAlign='left'}) }
+  else if(n.k==='end'){ say2('✅ نجاح','تم تأكيد النجاح: '+n.title+' — الباب اتفتح. اضغط الزر لما تكون جاهز للمستوى اللي بعده.');
+    mkBtn('Next Level ➡️','pri crgNext',advance) } // 📍 ما ينتقلش للمستوى التالي إلا بالضغط اليدوي على الزر ده
+  else if(n.k==='win'){ setImg(CRG_STORY.win.img); say2('🏆 النهاية',CRG_STORY.win.t); confetti(true);
+    mkBtn('العب من جديد 🔄','pri',()=>{idx=0;render()}) }
+}
+function answer(b,ok){
+  if(ok){ $$('#crgBtns .opt').forEach(x=>x.disabled=true); b.classList.add('ok'); result(true,10); setTimeout(()=>{if(!fainted&&active)advance()},700) }
+  else { b.classList.add('no'); b.disabled=true;
+    alarm();                                                            // 🔊 صوت إنذار الخطر فوراً
+    setImg(CRG_STORY.fail.img); el.f.classList.add('fail'); say2('⚠️ إنذار',CRG_STORY.fail.t); // 🖼️ img30
+    result(false);                                                      // ➖ خصم/زيادة توتر في Panic Bar (نفس نظام التطبيق القديم)
+    clearTimeout(failT); failT=setTimeout(()=>{ if(fainted)return; el.f.classList.remove('fail'); const n=nodes[idx]; if(n&&n.k==='q'){ const prev=lastImg(idx); if(prev)setImg(prev); say2('سؤال '+n.kind,n.q.t) } },2600); }
+}
+function lastImg(i){for(let j=i;j>=0;j--){if(nodes[j].k==='s'&&nodes[j].s.img!=null)return nodes[j].s.img}return null}
+
+const oldGo2=window.go;
+window.go=function(i){ const r=oldGo2.apply(this,arguments);
+  active=(i===6); document.body.classList.toggle('crg-on',active);
+  if(active){resumeMusic();render()}                                    // 📍 دخول التاب: القصة تبدأ فوراً + موسيقى التوتر تبدأ/تكمل (Loop)
+  else pauseMusic();                                                    // 📍 الخروج (Back أو أي تاب): إيقاف الموسيقى مؤقتاً
+  return r };
+const oldSetPanic2=window.setPanic;
+window.setPanic=function(v){ const r=oldSetPanic2.apply(this,arguments);
+  if(active&&panic>=100&&!fainted){ fainted=true; $('#faint').classList.remove('on'); render() } // 📍 إغماء داخل القصة: نخفي شاشة الإغماء القديمة ونعرض img31
+  return r };
+})();
+</script>
+
+</body> مباشرةً، أي بعد وسم </script> 
 <script id="mr-additions-js">
 
 const MR_IMGS = {
-  shock:      'sudeen.jpg', 
+  shock:      'sudeen.jpg',
   suspicious: 'zizo-fail.jpg', 
-  celebrate:  'sucsess.jpg'  
+  celebrate:  'sucsess.jpg' 
 };
-const MR_IMG_FALLBACK = { shock:'😱', suspicious:'🤨', celebrate:'🥳' };
 
 const MR_SFX = {
-  panicAlert: 'faillll3.mp3',
-  mazoun:     'lap.mp3',
+  panicAlert: 'faillll3.mp3', 
+  mazoun:     'lap.mp3', 
   rottenEgg:  'so2.mp3'  
 };
 
@@ -427,9 +656,9 @@ const MR_TXT = {
 };
 
 const MR_HEAT = {
-  'HCO₃⁻ + dil. HCl':    true, 
-  'Br⁻ + conc. H₂SO₄':   true, 
-  'I⁻ + conc. H₂SO₄':    true  
+  'HCO₃⁻ + dil. HCl':    true, // البيكربونات: ترسيب MgCO₃ الأبيض بيظهر بالتسخين (مذكور في نص التفاعل نفسه)
+  'Br⁻ + conc. H₂SO₄':   true, // البروميد: تسخين خفيف مع H₂SO₄ المركز
+  'I⁻ + conc. H₂SO₄':    true  // اليوديد: تسخين خفيف مع H₂SO₄ المركز
 };
 const MR_HEAT_AFTER_MATCH_MS = 3000;
 
@@ -437,15 +666,15 @@ const MR_HEAT_AFTER_MATCH_MS = 3000;
 'use strict';
 
 const audioCache = {}; 
-let ctx = null;          
+let ctx = null;         
 function getCtx(){try{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}catch(e){return null}}
 function tone(f,t0,d,type,vol,f2){const ac=getCtx();if(!ac)return;
  const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+t0;o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.linearRampToValueAtTime(f2,t+d);
  g.gain.setValueAtTime(vol||.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+.02)}
 const FALLBACK = {
-  panicAlert(){for(let i=0;i<4;i++){tone(880,i*.28,.14,'square',.06);tone(620,i*.28+.14,.14,'square',.06)}}, 
-  mazoun(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.12,.22,'triangle',.08))},                          
-  rottenEgg(){tone(180,0,.5,'sawtooth',.07,90);tone(140,.15,.5,'sawtooth',.06,70);tone(110,.5,.4,'square',.05,60)} 
+  panicAlert(){for(let i=0;i<4;i++){tone(880,i*.28,.14,'square',.06);tone(620,i*.28+.14,.14,'square',.06)}}, // صفارة إنذار
+  mazoun(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.12,.22,'triangle',.08))},                          // جرس فرح
+  rottenEgg(){tone(180,0,.5,'sawtooth',.07,90);tone(140,.15,.5,'sawtooth',.06,70);tone(110,.5,.4,'square',.05,60)} // صوت "إيييه" مقرف
 };
 function play(key){try{const src=MR_SFX[key];
   if(src){let a=audioCache[key];if(!a){a=new Audio(src);audioCache[key]=a}a.currentTime=0;const p=a.play();if(p&&p.catch)p.catch(()=>FALLBACK[key]())}
@@ -453,12 +682,12 @@ function play(key){try{const src=MR_SFX[key];
 
 (function(){
   const box=document.querySelector('#faint .glass'); if(!box)return;
-  if(MR_IMGS.shock){ 
+  if(MR_IMGS.shock){ // الصورة بتتضاف بس لو حطيت مسار — وإلا بيفضل إيموجي 😵‍💫 القديم زي ما هو
     const im=new Image(); im.className='mrShockImg'; im.alt='المستر مذهول';
-    im.onerror=()=>im.remove(); 
+    im.onerror=()=>im.remove();
     im.src=MR_IMGS.shock; box.insertBefore(im,box.firstChild);
   }
-  const p=document.createElement('p'); p.className='mrShockTxt'; p.textContent=MR_TXT.shock;
+  const p=document.createElement('p'); p.className='mrShockTxt'; p.textContent=MR_TXT.shock; 
   const old=box.querySelector('p'); if(old)old.insertAdjacentElement('afterend',p); else box.appendChild(p);
 })();
 
@@ -478,18 +707,19 @@ function showPop(key,text,ms){
   pop.className='on '+key;
   popT=setTimeout(()=>pop.classList.remove('on'),ms||3500);
 }
+
 const oldSetPanic=window.setPanic;
 window.setPanic=function(v){
   const prev=panic;                                   
   const r=oldSetPanic.apply(this,arguments);         
-  if(prev<=80 && panic>80) setTimeout(()=>play('panicAlert'),350);
+  if(prev<=80 && panic>80) setTimeout(()=>play('panicAlert'),350); 
   return r;
 };
 
 const oldGo=window.go;
 window.go=function(i){
-  const r=oldGo.apply(this,arguments);             
-  if(i===1) play('mazoun');                          
+  const r=oldGo.apply(this,arguments);                
+  if(i===1) play('mazoun');                           
   if(i!==1) stopHeat();                              
   if(i===2) showPop('suspicious',MR_TXT.suspicious.replace(/\{n\}/g,NAME),3800); 
   return r;
@@ -500,7 +730,7 @@ const oldChk=window.chk;
 window.chk=function(){
   const r=oldChk.apply(this,arguments);
   try{ if(mRound.length && matched===mRound.length && celebratedRound!==mRound){
-    celebratedRound=mRound;                          
+    celebratedRound=mRound;                           
     setTimeout(()=>showPop('celebrate','',5000),500); 
   }}catch(e){}
   return r;
@@ -522,10 +752,10 @@ function ensureFlame(){
 }
 function heatFrame(){
   heatRAF=requestAnimationFrame(heatFrame);
-  const now=performance.now(); heatLvl+=((heatOn?1:0)-heatLvl)*.08;                
+  const now=performance.now(); heatLvl+=((heatOn?1:0)-heatLvl)*.08;                 
   if(typeof tube!=='undefined'&&tube){tube.position.x=Math.sin(now/38)*.03*heatLvl;   
-    tube.position.y=.35*heatLvl;}                                                     
-  if(heatOn&&typeof liq!=='undefined'&&liq&&liq.material.emissive)                      
+    tube.position.y=.35*heatLvl;}                                                      
+  if(heatOn&&typeof liq!=='undefined'&&liq&&liq.material.emissive)                     
     liq.material.emissive.setRGB(.28*heatLvl*(.8+.2*Math.sin(now/90)),.08*heatLvl,0);
   if(flame){flame.visible=heatLvl>.02;const w=1+.08*Math.sin(now/41),fl=1+.22*Math.sin(now/55)+.1*Math.sin(now/23);
     flame.scale.set(w,Math.max(.001,fl*heatLvl),w);
@@ -539,7 +769,7 @@ function heatFrame(){
 }
 function startHeat(){
   clearTimeout(heatStopT); heatOn=true; ensureFlame();
-  const st=document.getElementById('stage'); if(st)st.classList.add('mrHeating');   
+  const st=document.getElementById('stage'); if(st)st.classList.add('mrHeating');    
   if(!heatRAF)heatFrame();
 }
 function stopHeat(){
@@ -552,16 +782,16 @@ document.getElementById('mR').addEventListener('click',function(e){
   const b=e.target.closest&&e.target.closest('button'); if(!b||b.disabled)return;
   const p=mRound[+b.dataset.i]; if(!p)return;
   if(p.r==='S²⁻ + dil. HCl') play('rottenEgg');      
-  if(needsHeat(p)){startHeat();say(MR_TXT.heat)}      
-  else stopHeat();                                    
+  if(needsHeat(p)){startHeat();say(MR_TXT.heat)}    
+  else stopHeat();                                   
 },true);
 
 const oldNeutral=window.tubeNeutral;
-window.tubeNeutral=function(){stopHeat();return oldNeutral.apply(this,arguments)};          
+window.tubeNeutral=function(){stopHeat();return oldNeutral.apply(this,arguments)};         
 const oldFail=window.tubeFail;
-window.tubeFail=function(){stopHeat();return oldFail.apply(this,arguments)};                 
+window.tubeFail=function(){stopHeat();return oldFail.apply(this,arguments)};               
 const oldReact=window.tubeReact;
-window.tubeReact=function(){const r=oldReact.apply(this,arguments);                        
+window.tubeReact=function(){const r=oldReact.apply(this,arguments);                       
   clearTimeout(heatStopT); if(heatOn)heatStopT=setTimeout(stopHeat,MR_HEAT_AFTER_MATCH_MS); 
   return r};
 })();
